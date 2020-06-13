@@ -15,6 +15,12 @@ public class Locker {
         if (store.size() >= capacity) {
             throw new Exception("Locker is full");
         }
-        return new Ticket();
+        Ticket ticket = new Ticket();
+        store.put(ticket, bag);
+        return ticket;
+    }
+
+    public Bag take(Ticket ticket) {
+        return store.get(ticket);
     }
 }
