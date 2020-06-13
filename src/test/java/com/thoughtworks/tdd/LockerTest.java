@@ -22,8 +22,9 @@ public class LockerTest {
     }
 
     @Test
-    void should_fail_given_full_locker_and_bag_when_save_bag() {
-        Locker locker = new Locker(0);
+    void should_fail_given_full_locker_and_bag_when_save_bag() throws Exception {
+        Locker locker = new Locker(1);
+        locker.save(new Bag());
         Bag bag = new Bag();
 
         Exception exception = assertThrows(Exception.class, () -> locker.save(bag));
