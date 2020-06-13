@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //DONE GIVEN LOCKER没有空间 WHEN 存包 THEN 存包失败
 //DONE GIVEN 有效的票，WHEN 取包 THEN 取包成功
 //DONE GIVEN 取过包的有票 WHEN 取包 THEN 取包失败
-//TODO GIVEN 伪造票据 WHEN 取包 THEN 取包失败
+//DONE GIVEN 伪造票据 WHEN 取包 THEN 取包失败
 public class LockerTest {
 
     @Test
@@ -53,5 +53,14 @@ public class LockerTest {
 
         assertEquals("Illegal ticket", exception.getMessage());
 
+    }
+
+    @Test
+    void should_fail_given_not_full_locker_and_not_valid_ticket_when_take_bag() {
+        Locker locker = new Locker(5);
+
+        Exception exception = assertThrows(Exception.class, () -> locker.take(new Ticket()));
+
+        assertEquals("Illegal ticket", exception.getMessage());
     }
 }
