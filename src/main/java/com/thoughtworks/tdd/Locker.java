@@ -20,7 +20,12 @@ public class Locker {
         return ticket;
     }
 
-    public Bag take(Ticket ticket) {
-        return store.get(ticket);
+    public Bag take(Ticket ticket) throws Exception {
+        if (!store.containsKey(ticket)) {
+            throw new Exception("Illegal ticket");
+        }
+        Bag bag = store.get(ticket);
+        store.remove(ticket);
+        return bag;
     }
 }
