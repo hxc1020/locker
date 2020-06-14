@@ -1,7 +1,7 @@
 package com.thoughtworks.tdd;
 
 import com.thoughtworks.tdd.exception.LockerIsFullException;
-import com.thoughtworks.tdd.exception.TicketNotValidException;
+import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,7 +58,7 @@ public class RobotTest {
 
 
     @Test
-    void should_get_bag_when_take_given_robot_and_two_locker_and_valid_ticket() throws LockerIsFullException, TicketNotValidException {
+    void should_get_bag_when_take_given_robot_and_two_locker_and_valid_ticket() throws LockerIsFullException, TicketIsInvalidException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(1);
         Robot robot = new Robot(Arrays.asList(locker1, locker2));
@@ -68,5 +68,18 @@ public class RobotTest {
         Bag bag = robot.take(ticket);
 
         assertEquals(givenBag, bag);
+    }
+
+    @Test
+    void should_throw_TicketIsInvalidException_when_take_given_robot_and_two_locker_and_used_ticket() throws LockerIsFullException, TicketIsInvalidException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        Robot robot = new Robot(Arrays.asList(locker1, locker2));
+        Bag givenBag = new Bag();
+        Ticket ticket = robot.save(givenBag);
+
+        robot.take(ticket);
+
+        assertThrows(TicketIsInvalidException.class, () -> robot.take(ticket));
     }
 }

@@ -1,7 +1,7 @@
 package com.thoughtworks.tdd;
 
 import com.thoughtworks.tdd.exception.LockerIsFullException;
-import com.thoughtworks.tdd.exception.TicketNotValidException;
+import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -46,13 +46,13 @@ public class LockerTest {
     }
 
     @Test
-    void should_fail_when_take_given_not_full_locker_and_used_ticket() throws TicketNotValidException, LockerIsFullException {
+    void should_fail_when_take_given_not_full_locker_and_used_ticket() throws TicketIsInvalidException, LockerIsFullException {
         Locker locker = new Locker(5);
         Bag bag = new Bag();
         Ticket ticket = locker.save(bag);
         locker.take(ticket);
 
-        TicketNotValidException exception = assertThrows(TicketNotValidException.class, () -> locker.take(ticket));
+        TicketIsInvalidException exception = assertThrows(TicketIsInvalidException.class, () -> locker.take(ticket));
 
         assertEquals("Illegal ticket", exception.getMessage());
 
@@ -62,7 +62,7 @@ public class LockerTest {
     void should_fail_when_take_given_not_full_locker_and_not_valid_ticket() {
         Locker locker = new Locker(5);
 
-        TicketNotValidException exception = assertThrows(TicketNotValidException.class, () -> locker.take(new Ticket()));
+        TicketIsInvalidException exception = assertThrows(TicketIsInvalidException.class, () -> locker.take(new Ticket()));
 
         assertEquals("Illegal ticket", exception.getMessage());
     }
