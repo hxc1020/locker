@@ -14,13 +14,18 @@ public class Locker {
         this.capacity = capacity;
         this.store = new HashMap<>(this.capacity);
     }
+
     public Ticket save(Bag bag) throws Exception {
-        if (store.size() >= capacity) {
+        if (isFull()) {
             throw new LockerIsFullException("Locker is full");
         }
         Ticket ticket = new Ticket();
         store.put(ticket, bag);
         return ticket;
+    }
+
+    public boolean isFull() {
+        return store.size() >= capacity;
     }
 
     public Bag take(Ticket ticket) throws Exception {

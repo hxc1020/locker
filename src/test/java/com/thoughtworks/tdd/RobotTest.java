@@ -26,4 +26,19 @@ public class RobotTest {
         Bag bag = locker.take(ticket);
         assertEquals(givenBag, bag);
     }
+
+    @Test
+    void should_get_ticket_and_save_2st_locker_when_save_given_robot_and_two_locker_and_2nd_has_capacity() throws Exception {
+        Locker locker1 = new Locker(1);
+        locker1.save(new Bag());
+        Locker locker2 = new Locker(6);
+        Robot robot = new Robot(Arrays.asList(locker1, locker2));
+        Bag givenBag = new Bag();
+
+        Ticket ticket = robot.save(givenBag);
+
+        assertNotNull(ticket);
+        Bag bag = locker2.take(ticket);
+        assertEquals(givenBag, bag);
+    }
 }
