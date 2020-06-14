@@ -29,9 +29,13 @@ public class Locker {
     }
 
     public Bag take(Ticket ticket) throws TicketNotValidException{
-        if (!store.containsKey(ticket)) {
+        if (!hasBag(ticket)) {
             throw new TicketNotValidException("Illegal ticket");
         }
         return store.remove(ticket);
+    }
+
+    public boolean hasBag(Ticket ticket){
+        return store.containsKey(ticket);
     }
 }
