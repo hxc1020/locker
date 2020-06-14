@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LockerTest {
 
     @Test
-    void should_get_ticket_given_not_full_locker_and_bag_when_save_bag() throws Exception {
+    void should_get_ticket_when_save_given_not_full_locker() throws Exception {
         Locker locker = new Locker(5);
         Bag bag = new Bag();
 
@@ -22,7 +22,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_fail_given_full_locker_and_bag_when_save_bag() throws Exception {
+    void should_fail_when_save_given_full_locker_and_bag() throws Exception {
         Locker locker = new Locker(1);
         locker.save(new Bag());
         Bag bag = new Bag();
@@ -33,7 +33,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_get_bag_given_not_full_locker_and_ticket_when_take_bag() throws Exception {
+    void should_get_bag_when_take_given_not_full_locker_and_ticket() throws Exception {
         Locker locker = new Locker(5);
         Bag givenBag = new Bag();
         Ticket ticket = locker.save(givenBag);
@@ -44,7 +44,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_fail_given_not_full_locker_and_used_ticket_when_take_bag() throws Exception {
+    void should_fail_when_take_given_not_full_locker_and_used_ticket() throws Exception {
         Locker locker = new Locker(5);
         Bag bag = new Bag();
         Ticket ticket = locker.save(bag);
@@ -57,7 +57,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_fail_given_not_full_locker_and_not_valid_ticket_when_take_bag() {
+    void should_fail_when_take_given_not_full_locker_and_not_valid_ticket() {
         Locker locker = new Locker(5);
 
         Exception exception = assertThrows(Exception.class, () -> locker.take(new Ticket()));
