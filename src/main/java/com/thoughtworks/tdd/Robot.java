@@ -1,5 +1,7 @@
 package com.thoughtworks.tdd;
 
+import com.thoughtworks.tdd.exception.LockerIsFullException;
+
 import java.util.List;
 
 public class Robot {
@@ -9,7 +11,7 @@ public class Robot {
         this.lockers = lockers;
     }
 
-    public Ticket save(Bag bag) throws Exception {
+    public Ticket save(Bag bag) throws LockerIsFullException {
         if (lockers.get(0).isFull()) {
             return lockers.get(1).save(bag);
         }

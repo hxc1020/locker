@@ -15,7 +15,7 @@ public class Locker {
         this.store = new HashMap<>(this.capacity);
     }
 
-    public Ticket save(Bag bag) throws Exception {
+    public Ticket save(Bag bag) throws LockerIsFullException{
         if (isFull()) {
             throw new LockerIsFullException("Locker is full");
         }
@@ -28,7 +28,7 @@ public class Locker {
         return store.size() >= capacity;
     }
 
-    public Bag take(Ticket ticket) throws Exception {
+    public Bag take(Ticket ticket) throws TicketNotValidException{
         if (!store.containsKey(ticket)) {
             throw new TicketNotValidException("Illegal ticket");
         }

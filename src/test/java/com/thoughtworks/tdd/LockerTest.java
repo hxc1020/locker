@@ -1,5 +1,7 @@
 package com.thoughtworks.tdd;
 
+import com.thoughtworks.tdd.exception.LockerIsFullException;
+import com.thoughtworks.tdd.exception.TicketNotValidException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LockerTest {
 
     @Test
-    void should_get_ticket_when_save_given_not_full_locker() throws Exception {
+    void should_get_ticket_when_save_given_not_full_locker() throws LockerIsFullException {
         Locker locker = new Locker(5);
         Bag bag = new Bag();
 
@@ -22,12 +24,12 @@ public class LockerTest {
     }
 
     @Test
-    void should_fail_when_save_given_full_locker_and_bag() throws Exception {
+    void should_fail_when_save_given_full_locker_and_bag() throws LockerIsFullException{
         Locker locker = new Locker(1);
         locker.save(new Bag());
         Bag bag = new Bag();
 
-        Exception exception = assertThrows(Exception.class, () -> locker.save(bag));
+        LockerIsFullException exception = assertThrows(LockerIsFullException.class, () -> locker.save(bag));
 
         assertEquals("Locker is full", exception.getMessage());
     }
@@ -44,13 +46,13 @@ public class LockerTest {
     }
 
     @Test
-    void should_fail_when_take_given_not_full_locker_and_used_ticket() throws Exception {
+    void should_fail_when_take_given_not_full_locker_and_used_ticket() throws TicketNotValidException, LockerIsFullException {
         Locker locker = new Locker(5);
         Bag bag = new Bag();
         Ticket ticket = locker.save(bag);
         locker.take(ticket);
 
-        Exception exception = assertThrows(Exception.class, () -> locker.take(ticket));
+        TicketNotValidException exception = assertThrows(TicketNotValidException.class, () -> locker.take(ticket));
 
         assertEquals("Illegal ticket", exception.getMessage());
 
@@ -60,7 +62,7 @@ public class LockerTest {
     void should_fail_when_take_given_not_full_locker_and_not_valid_ticket() {
         Locker locker = new Locker(5);
 
-        Exception exception = assertThrows(Exception.class, () -> locker.take(new Ticket()));
+        TicketNotValidException exception = assertThrows(TicketNotValidException.class, () -> locker.take(new Ticket()));
 
         assertEquals("Illegal ticket", exception.getMessage());
     }
