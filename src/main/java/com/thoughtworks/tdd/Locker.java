@@ -1,5 +1,8 @@
 package com.thoughtworks.tdd;
 
+import com.thoughtworks.tdd.exception.LockerIsFullException;
+import com.thoughtworks.tdd.exception.TicketNotValidException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +16,7 @@ public class Locker {
     }
     public Ticket save(Bag bag) throws Exception {
         if (store.size() >= capacity) {
-            throw new Exception("Locker is full");
+            throw new LockerIsFullException("Locker is full");
         }
         Ticket ticket = new Ticket();
         store.put(ticket, bag);
@@ -22,10 +25,8 @@ public class Locker {
 
     public Bag take(Ticket ticket) throws Exception {
         if (!store.containsKey(ticket)) {
-            throw new Exception("Illegal ticket");
+            throw new TicketNotValidException("Illegal ticket");
         }
-        Bag bag = store.get(ticket);
-        store.remove(ticket);
-        return bag;
+        return store.remove(ticket);
     }
 }
