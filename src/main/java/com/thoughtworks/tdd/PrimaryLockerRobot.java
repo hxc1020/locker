@@ -18,7 +18,7 @@ public class PrimaryLockerRobot {
                 return locker.save(bag);
             }
         }
-        throw new LockerIsFullException("Locker is full!");
+        throw new LockerIsFullException();
     }
 
     public Bag take(Ticket ticket) throws TicketIsInvalidException {
@@ -27,6 +27,6 @@ public class PrimaryLockerRobot {
                 return locker.take(ticket);
             }
         }
-        throw new TicketIsInvalidException("Ticket is invalid!");
+        throw new TicketIsInvalidException();
     }
 }

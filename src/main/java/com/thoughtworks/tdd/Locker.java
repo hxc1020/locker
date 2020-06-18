@@ -17,7 +17,7 @@ public class Locker {
 
     public Ticket save(Bag bag) throws LockerIsFullException{
         if (isFull()) {
-            throw new LockerIsFullException("Locker is full");
+            throw new LockerIsFullException();
         }
         Ticket ticket = new Ticket();
         store.put(ticket, bag);
@@ -30,7 +30,7 @@ public class Locker {
 
     public Bag take(Ticket ticket) throws TicketIsInvalidException {
         if (!hasBag(ticket)) {
-            throw new TicketIsInvalidException("Illegal ticket");
+            throw new TicketIsInvalidException();
         }
         return store.remove(ticket);
     }

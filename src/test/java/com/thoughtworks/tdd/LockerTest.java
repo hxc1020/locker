@@ -24,14 +24,13 @@ public class LockerTest {
     }
 
     @Test
-    void should_fail_when_save_given_full_locker_and_bag() throws LockerIsFullException{
+    void should_fail_when_save_given_full_locker_and_bag() throws LockerIsFullException {
         Locker locker = new Locker(1);
         locker.save(new Bag());
         Bag bag = new Bag();
 
-        LockerIsFullException exception = assertThrows(LockerIsFullException.class, () -> locker.save(bag));
+        assertThrows(LockerIsFullException.class, () -> locker.save(bag));
 
-        assertEquals("Locker is full", exception.getMessage());
     }
 
     @Test
@@ -52,9 +51,7 @@ public class LockerTest {
         Ticket ticket = locker.save(bag);
         locker.take(ticket);
 
-        TicketIsInvalidException exception = assertThrows(TicketIsInvalidException.class, () -> locker.take(ticket));
-
-        assertEquals("Illegal ticket", exception.getMessage());
+        assertThrows(TicketIsInvalidException.class, () -> locker.take(ticket));
 
     }
 
@@ -62,8 +59,6 @@ public class LockerTest {
     void should_fail_when_take_given_not_full_locker_and_not_valid_ticket() {
         Locker locker = new Locker(5);
 
-        TicketIsInvalidException exception = assertThrows(TicketIsInvalidException.class, () -> locker.take(new Ticket()));
-
-        assertEquals("Illegal ticket", exception.getMessage());
+        assertThrows(TicketIsInvalidException.class, () -> locker.take(new Ticket()));
     }
 }
