@@ -86,4 +86,19 @@ public class SmartLockerRobotTest {
 
         assertThrows(TicketIsInvalidException.class, () -> smartLockerRobot.take(ticket));
     }
+
+    @Test
+    void should_get_bag_when_take_given_smartLockerRobot_manage_locker1_and_locker2_and_primaryLockerRobot_manage_locker2_and_locker3_and_ticket_which_is_saved_by_locker2_from_primaryLockerRobot() throws LockerIsFullException, TicketIsInvalidException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        Locker locker3 = new Locker(1);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker1, locker2));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker2, locker3));
+        Bag givenBag = new Bag();
+        Ticket ticketFromLocker2 = primaryLockerRobot.save(givenBag);
+
+        Bag bag = smartLockerRobot.take(ticketFromLocker2);
+
+        assertEquals(givenBag, bag);
+    }
 }
