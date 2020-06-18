@@ -4,8 +4,9 @@ import com.thoughtworks.tdd.exception.LockerIsFullException;
 import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -63,7 +64,20 @@ public class SmartLockerRobotTest {
     }
 
     @Test
-    void should_throw_TicketIsInvalidException_when_take_given_smartLockerRobot_manage_locker1_and_locker2_and_ticket_is_invalid() throws TicketIsInvalidException, LockerIsFullException {
+    void should_get_bag_when_take_given_smartLockerRobot_manage_locker1_and_locker2_and_valid_ticket() throws LockerIsFullException, TicketIsInvalidException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker1, locker2));
+        Bag givenBag = new Bag();
+        Ticket ticket = smartLockerRobot.save(givenBag);
+
+        Bag bag = smartLockerRobot.take(ticket);
+
+        assertEquals(givenBag, bag);
+    }
+
+    @Test
+    void should_throw_TicketIsInvalidException_when_take_given_smartLockerRobot_manage_locker1_and_locker2_and_ticket_is_invalid() throws LockerIsFullException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(1);
         SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker1, locker2));

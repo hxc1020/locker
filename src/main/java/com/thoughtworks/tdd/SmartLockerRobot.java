@@ -24,6 +24,11 @@ public class SmartLockerRobot {
     }
 
     public Bag take(Ticket ticket) throws TicketIsInvalidException {
+        for (Locker locker : lockers) {
+            if (locker.hasBag(ticket)) {
+                return locker.take(ticket);
+            }
+        }
         throw new TicketIsInvalidException();
     }
 }
