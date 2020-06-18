@@ -15,7 +15,9 @@ public class SmartLockerRobot {
 
     public Ticket save(Bag bag) throws LockerIsFullException {
         lockers.sort(Comparator.comparing(Locker::freeSpace));
-        Collections.reverse(lockers);
+        if (lockers.get(0).freeSpace() != lockers.get(1).freeSpace()) {
+            Collections.reverse(lockers);
+        }
         return lockers.get(0).save(bag);
     }
 
