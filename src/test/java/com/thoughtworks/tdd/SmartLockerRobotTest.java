@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SmartLockerRobotTest {
 
@@ -49,5 +48,16 @@ public class SmartLockerRobotTest {
         assertNotNull(ticket);
         Bag bag = locker1.take(ticket);
         assertEquals(givenBag, bag);
+    }
+
+    @Test
+    void should_throw_LockerIsFullException_when_save_given_smartLockerRobot_manage_locker1_and_locker2_and_both_full() throws LockerIsFullException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker1, locker2));
+        smartLockerRobot.save(new Bag());
+        smartLockerRobot.save(new Bag());
+
+        assertThrows(LockerIsFullException.class, ()-> smartLockerRobot.save(new Bag()));
     }
 }
