@@ -1,6 +1,7 @@
 package com.thoughtworks.tdd;
 
 import com.thoughtworks.tdd.exception.LockerIsFullException;
+import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,5 +23,8 @@ public class SmartLockerRobot {
         return null;
     }
 
+    public Bag take(Ticket ticket) throws TicketIsInvalidException {
+        throw new TicketIsInvalidException();
+    }
 }
 

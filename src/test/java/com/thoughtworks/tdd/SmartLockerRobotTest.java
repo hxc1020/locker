@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.function.ToDoubleBiFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,6 +59,17 @@ public class SmartLockerRobotTest {
         smartLockerRobot.save(new Bag());
         smartLockerRobot.save(new Bag());
 
-        assertThrows(LockerIsFullException.class, ()-> smartLockerRobot.save(new Bag()));
+        assertThrows(LockerIsFullException.class, () -> smartLockerRobot.save(new Bag()));
+    }
+
+    @Test
+    void should_throw_TicketIsInvalidException_when_take_given_smartLockerRobot_manage_locker1_and_locker2_and_ticket_is_invalid() throws TicketIsInvalidException, LockerIsFullException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker1, locker2));
+        smartLockerRobot.save(new Bag());
+        Ticket ticket = new Ticket();
+
+        assertThrows(TicketIsInvalidException.class, () -> smartLockerRobot.take(ticket));
     }
 }
