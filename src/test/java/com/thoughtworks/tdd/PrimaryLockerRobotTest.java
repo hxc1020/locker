@@ -14,15 +14,15 @@ import java.util.Arrays;
 //DONE GIVEN:机器人管理2个柜子，有效票 WHEN: 取包 THEN: 得到存的包
 //DONE GIVEN:机器人管理2个柜子，取过的票 WHEN: 取包 THEN: 取包失败
 //DONE GIVEN:机器人管理2个柜子，无效票 WHEN: 取包 THEN: 取包失败
-public class RobotTest {
+public class PrimaryLockerRobotTest {
 
     @Test
     void should_get_ticket_and_save_1st_locker_when_save_given_robot_and_two_locker_and_both_has_capacity() throws Exception {
         Locker locker = new Locker(5);
-        Robot robot = new Robot(Arrays.asList(locker, new Locker(6)));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker, new Locker(6)));
         Bag givenBag = new Bag();
 
-        Ticket ticket = robot.save(givenBag);
+        Ticket ticket = primaryLockerRobot.save(givenBag);
 
         assertNotNull(ticket);
         Bag bag = locker.take(ticket);
@@ -34,10 +34,10 @@ public class RobotTest {
         Locker locker1 = new Locker(1);
         locker1.save(new Bag());
         Locker locker2 = new Locker(6);
-        Robot robot = new Robot(Arrays.asList(locker1, locker2));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         Bag givenBag = new Bag();
 
-        Ticket ticket = robot.save(givenBag);
+        Ticket ticket = primaryLockerRobot.save(givenBag);
 
         assertNotNull(ticket);
         Bag bag = locker2.take(ticket);
@@ -50,10 +50,10 @@ public class RobotTest {
         locker1.save(new Bag());
         Locker locker2 = new Locker(1);
         locker2.save(new Bag());
-        Robot robot = new Robot(Arrays.asList(locker1, locker2));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         Bag givenBag = new Bag();
 
-        assertThrows(LockerIsFullException.class, () -> robot.save(givenBag));
+        assertThrows(LockerIsFullException.class, () -> primaryLockerRobot.save(givenBag));
     }
 
 
@@ -61,11 +61,11 @@ public class RobotTest {
     void should_get_bag_when_take_given_robot_and_two_locker_and_valid_ticket() throws LockerIsFullException, TicketIsInvalidException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(1);
-        Robot robot = new Robot(Arrays.asList(locker1, locker2));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         Bag givenBag = new Bag();
-        Ticket ticket = robot.save(givenBag);
+        Ticket ticket = primaryLockerRobot.save(givenBag);
 
-        Bag bag = robot.take(ticket);
+        Bag bag = primaryLockerRobot.take(ticket);
 
         assertEquals(givenBag, bag);
     }
@@ -74,23 +74,23 @@ public class RobotTest {
     void should_throw_TicketIsInvalidException_when_take_given_robot_and_two_locker_and_used_ticket() throws LockerIsFullException, TicketIsInvalidException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(1);
-        Robot robot = new Robot(Arrays.asList(locker1, locker2));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         Bag givenBag = new Bag();
-        Ticket ticket = robot.save(givenBag);
+        Ticket ticket = primaryLockerRobot.save(givenBag);
 
-        robot.take(ticket);
+        primaryLockerRobot.take(ticket);
 
-        assertThrows(TicketIsInvalidException.class, () -> robot.take(ticket));
+        assertThrows(TicketIsInvalidException.class, () -> primaryLockerRobot.take(ticket));
     }
 
     @Test
     void should_throw_TicketIsInvalidException_when_take_given_robot_and_two_locker_and_invalid_ticket() throws LockerIsFullException, TicketIsInvalidException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(4);
-        Robot robot = new Robot(Arrays.asList(locker1, locker2));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         Bag givenBag = new Bag();
-        robot.save(givenBag);
+        primaryLockerRobot.save(givenBag);
 
-        assertThrows(TicketIsInvalidException.class, () -> robot.take(new Ticket()));
+        assertThrows(TicketIsInvalidException.class, () -> primaryLockerRobot.take(new Ticket()));
     }
 }
