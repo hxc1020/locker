@@ -5,6 +5,7 @@ import com.thoughtworks.tdd.exception.LockerIsFullException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class SmartLockerRobot {
     private final List<Locker> lockers;
@@ -14,11 +15,11 @@ public class SmartLockerRobot {
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
-        lockers.sort(Comparator.comparing(Locker::freeSpace));
-        if (lockers.get(0).freeSpace() != lockers.get(1).freeSpace()) {
-            Collections.reverse(lockers);
+        Optional<Locker> maxSpaceLocker = lockers.stream().max(Comparator.comparing(Locker::freeSpace));
+        if (maxSpaceLocker.isPresent()) {
+            return maxSpaceLocker.get().save(bag);
         }
-        return lockers.get(0).save(bag);
+        return null;
     }
 
 }
