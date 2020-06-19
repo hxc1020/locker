@@ -5,9 +5,6 @@ import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.function.Function;
-import java.util.function.ToDoubleBiFunction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -115,5 +112,20 @@ public class SmartLockerRobotTest {
         Ticket ticketFromLocker3 = primaryLockerRobot.save(givenBag);
 
         assertThrows(TicketIsInvalidException.class, () -> smartLockerRobot.take(ticketFromLocker3));
+    }
+
+    @Test
+    void should_get_bag_when_take_by_primaryLockerRobot_given_smartLockerRobot_manage_locker1_and_locker2_and_primaryLockerRobot_manage_locker2_and_locker3_and_ticket_which_is_saved_by_locker2_from_smartLockerRobot() throws LockerIsFullException, TicketIsInvalidException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(2);
+        Locker locker3 = new Locker(1);
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker1, locker2));
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker2, locker3));
+        Bag givenBag = new Bag();
+        Ticket ticketFromLocker2 = smartLockerRobot.save(givenBag);
+
+        Bag bag = primaryLockerRobot.take(ticketFromLocker2);
+
+        assertEquals(givenBag, bag);
     }
 }
