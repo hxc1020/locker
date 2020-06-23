@@ -1,12 +1,10 @@
 package com.thoughtworks.tdd;
 
 import com.thoughtworks.tdd.exception.LockerIsFullException;
-import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 
 import java.util.List;
 
-public class PrimaryLockerRobot implements Robot{
-    private final List<Locker> lockers;
+public class PrimaryLockerRobot extends BaseRobot {
 
     public PrimaryLockerRobot(List<Locker> lockers) {
         this.lockers = lockers;
@@ -19,14 +17,5 @@ public class PrimaryLockerRobot implements Robot{
             }
         }
         throw new LockerIsFullException();
-    }
-
-    public Bag take(Ticket ticket) throws TicketIsInvalidException {
-        for (Locker locker : lockers) {
-            if (locker.hasBag(ticket)) {
-                return locker.take(ticket);
-            }
-        }
-        throw new TicketIsInvalidException();
     }
 }

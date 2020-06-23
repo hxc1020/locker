@@ -8,4 +8,6 @@ public interface Robot {
     Ticket save(Bag bag) throws LockerIsFullException;
 
     Bag take(Ticket ticket) throws TicketIsInvalidException;
+
+    boolean isFull();
 }
