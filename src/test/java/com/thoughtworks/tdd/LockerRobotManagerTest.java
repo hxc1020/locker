@@ -4,7 +4,6 @@ import com.thoughtworks.tdd.exception.LockerIsFullException;
 import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 import org.junit.jupiter.api.Test;
 
-import javax.swing.border.TitledBorder;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -155,5 +154,16 @@ public class LockerRobotManagerTest {
         Bag bag = lockerRobotManager.take(ticket);
 
         assertEquals(givenBag, bag);
+    }
+
+    @Test
+    void should_throw_TicketIsInvalidException_when_take_bag_given_manager_manage_2_robots_and_0_locker_and_ticket_is_given_by_robot1() throws LockerIsFullException {
+        PrimaryLockerRobot robot1 = new PrimaryLockerRobot(Collections.singletonList(new Locker(3)));
+        SmartLockerRobot robot2 = new SmartLockerRobot(Collections.singletonList(new Locker(2)));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(emptyList(), Arrays.asList(robot1, robot2));
+        Bag givenBag = new Bag();
+        Ticket ticket = robot1.save(givenBag);
+
+        assertThrows(TicketIsInvalidException.class, () -> lockerRobotManager.take(ticket));
     }
 }

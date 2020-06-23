@@ -13,7 +13,9 @@ public class PrimaryLockerRobot extends BaseRobot {
     public Ticket save(Bag bag) throws LockerIsFullException {
         for (Locker locker : lockers) {
             if (!locker.isFull()) {
-                return locker.save(bag);
+                Ticket ticket = locker.save(bag);
+                ticket.setType(TicketType.GIVEN_BY_ROBOT);
+                return ticket;
             }
         }
         throw new LockerIsFullException();

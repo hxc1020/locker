@@ -10,4 +10,6 @@ public interface Robot {
     Bag take(Ticket ticket) throws TicketIsInvalidException;
 
     boolean isFull();
+
+    boolean hasBag(Ticket ticket);
 }

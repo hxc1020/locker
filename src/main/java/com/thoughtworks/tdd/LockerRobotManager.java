@@ -15,22 +15,40 @@ public class LockerRobotManager {
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
+        Ticket ticket = null;
         for (Robot robot : robots) {
             if (robot.isFull()) {
                 continue;
             }
-            return robot.save(bag);
+            ticket = robot.save(bag);
         }
         for (Locker locker : lockers) {
             if (locker.isFull()) {
                 continue;
             }
-            return locker.save(bag);
+            ticket =  locker.save(bag);
+        }
+        if (ticket != null) {
+            ticket.setType(TicketType.GIVEN_BY_MANAGER);
+            return ticket;
         }
         throw new LockerIsFullException();
     }
 
     public Bag take(Ticket ticket) throws TicketIsInvalidException {
-        return robots.get(0).take(ticket);
+        if (ticket.getType().equals(TicketType.GIVEN_BY_MANAGER)) {
+            for (Locker locker : lockers) {
+                if (locker.hasBag(ticket)) {
+                    return locker.take(ticket);
+                }
+            }
+
+            for (Robot robot : robots) {
+                if (robot.hasBag(ticket)) {
+                    return robot.take(ticket);
+                }
+            }
+        }
+        throw  new TicketIsInvalidException();
     }
 }
