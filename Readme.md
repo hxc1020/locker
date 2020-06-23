@@ -93,7 +93,7 @@ then：返回票据，成功存入locker1
 when：LockerRobotManager存包  
 then：提示储物柜已满，存包失败   
 
-- given：LockerRobotManager管理robot1、robot2，没有管理locker，票据是通过LockerRobotManage存包得到的  
+- given：LockerRobotManager管理两个robot，没有管理locker，票据是通过LockerRobotManage存包得到的  
 when：LockerRobotManager取包  
 then：取包成功  
 

@@ -1,6 +1,7 @@
 package com.thoughtworks.tdd;
 
 import com.thoughtworks.tdd.exception.LockerIsFullException;
+import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 
 import java.util.List;
 
@@ -27,5 +28,9 @@ public class LockerRobotManager {
             return locker.save(bag);
         }
         throw new LockerIsFullException();
+    }
+
+    public Bag take(Ticket ticket) throws TicketIsInvalidException {
+        return robots.get(0).take(ticket);
     }
 }
