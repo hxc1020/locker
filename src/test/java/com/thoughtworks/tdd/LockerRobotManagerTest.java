@@ -114,4 +114,20 @@ public class LockerRobotManagerTest {
         assertEquals(givenBag, locker2.take(ticket));
 
     }
+
+    @Test
+    void should_save_to_managers_locker_when_save_bag_given_manager_manage_1_robot_and_1_locker_and_robot_have_no_capacity() throws LockerIsFullException, TicketIsInvalidException {
+        Locker locker1 = new Locker(4);
+        Locker locker2 = new Locker(1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(locker2));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.singletonList(locker1), Collections.singletonList(primaryLockerRobot));
+        primaryLockerRobot.save(new Bag());
+
+        Bag givenBag = new Bag();
+        Ticket ticket = lockerRobotManager.save(givenBag);
+
+        assertNotNull(ticket);
+        assertEquals(givenBag, locker1.take(ticket));
+
+    }
 }
