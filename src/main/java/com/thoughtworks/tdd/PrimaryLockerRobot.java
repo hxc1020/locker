@@ -5,7 +5,7 @@ import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 
 import java.util.List;
 
-public class PrimaryLockerRobot {
+public class PrimaryLockerRobot implements Robot{
     private final List<Locker> lockers;
 
     public PrimaryLockerRobot(List<Locker> lockers) {

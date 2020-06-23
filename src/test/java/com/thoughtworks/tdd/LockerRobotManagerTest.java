@@ -39,7 +39,7 @@ public class LockerRobotManagerTest {
     }
 
     @Test
-    void should_throw_LockerIsFullException_when_save_bag_given_manager_manage_2_lockers_and_0_robot_and_both_locker_have_no_capacity() throws TicketIsInvalidException, LockerIsFullException {
+    void should_throw_LockerIsFullException_when_save_bag_given_manager_manage_2_lockers_and_0_robot_and_both_locker_have_no_capacity() throws LockerIsFullException {
         Locker locker1 = new Locker(1);
         Locker locker2 = new Locker(1);
         LockerRobotManager lockerRobotManager = new LockerRobotManager(Arrays.asList(locker1, locker2), emptyList());
@@ -47,5 +47,21 @@ public class LockerRobotManagerTest {
         locker2.save(new Bag());
 
         assertThrows(LockerIsFullException.class, () -> lockerRobotManager.save(new Bag()));
+    }
+
+    @Test
+    void should_saved_to_robot1s_locker_and_return_ticket_when_save_bag_given_manager_manage_2_robot_and_0_locker_and_both_robots_locker_have_capacity() throws TicketIsInvalidException, LockerIsFullException {
+        Locker locker1 = new Locker(2);
+        Locker locker2 = new Locker(3);
+        Locker locker3 = new Locker(1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker2, locker3));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(emptyList(), Arrays.asList(primaryLockerRobot, smartLockerRobot));
+
+        Bag givenBag = new Bag();
+        Ticket ticket = lockerRobotManager.save(givenBag);
+
+        assertNotNull(ticket);
+        assertEquals(givenBag, locker1.take(ticket));
     }
 }
