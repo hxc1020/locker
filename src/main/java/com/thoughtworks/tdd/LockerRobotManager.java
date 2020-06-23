@@ -12,6 +12,12 @@ public class LockerRobotManager {
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
-        return lockers.get(0).save(bag);
+        for (Locker locker : lockers) {
+            if (locker.isFull()) {
+                continue;
+            }
+            return locker.save(bag);
+        }
+        throw new LockerIsFullException();
     }
 }
