@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LockerRobotManagerTest {
 
     @Test
-    void should_saved_to_locker1_and_return_ticket_when_save_bag_given_manager_manage_2_lockers_and_0_robot() throws TicketIsInvalidException, LockerIsFullException {
+    void should_saved_to_locker1_and_return_ticket_when_save_bag_given_manager_manage_2_lockers_and_0_robot_and_both_lockers_have_capacity() throws TicketIsInvalidException, LockerIsFullException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(3);
         LockerRobotManager lockerRobotManager = new LockerRobotManager(Arrays.asList(locker1, locker2), emptyList());
@@ -57,6 +57,25 @@ public class LockerRobotManagerTest {
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
         SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker2, locker3));
         LockerRobotManager lockerRobotManager = new LockerRobotManager(emptyList(), Arrays.asList(primaryLockerRobot, smartLockerRobot));
+
+        Bag givenBag = new Bag();
+        Ticket ticket = lockerRobotManager.save(givenBag);
+
+        assertNotNull(ticket);
+        assertEquals(givenBag, locker1.take(ticket));
+    }
+
+    @Test
+    void should_saved_to_robot2s_locker_and_return_ticket_when_save_bag_given_manager_manage_2_robot_and_0_locker_and_robot1s_locker_has_no_capacity() throws TicketIsInvalidException, LockerIsFullException {
+        Locker locker1 = new Locker(3);
+        Locker locker2 = new Locker(1);
+        Locker locker3 = new Locker(1);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));
+        SmartLockerRobot smartLockerRobot = new SmartLockerRobot(Arrays.asList(locker2, locker3));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(emptyList(), Arrays.asList(smartLockerRobot, primaryLockerRobot));
+        smartLockerRobot.save(new Bag());
+        smartLockerRobot.save(new Bag());
+
 
         Bag givenBag = new Bag();
         Ticket ticket = lockerRobotManager.save(givenBag);

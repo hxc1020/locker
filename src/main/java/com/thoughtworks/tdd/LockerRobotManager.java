@@ -14,9 +14,11 @@ public class LockerRobotManager {
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
-        try {
-            return robots.get(0).save(bag);
-        } catch (LockerIsFullException | IndexOutOfBoundsException e){
+        for (Robot robot : robots) {
+            try {
+                return robot.save(bag);
+            } catch (LockerIsFullException | IndexOutOfBoundsException e) {
+            }
         }
         for (Locker locker : lockers) {
             if (locker.isFull()) {
