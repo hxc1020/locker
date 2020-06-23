@@ -5,6 +5,7 @@ import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.*;
@@ -97,5 +98,20 @@ public class LockerRobotManagerTest {
         primaryLockerRobot.save(new Bag());
 
         assertThrows(LockerIsFullException.class, () -> lockerRobotManager.save(new Bag()));
+    }
+
+    @Test
+    void should_save_to_robots_locker_when_save_bag_given_manager_manage_1_robot_and_1_locker_and_both_have_capacity() throws LockerIsFullException, TicketIsInvalidException {
+        Locker locker1 = new Locker(4);
+        Locker locker2 = new Locker(5);
+        PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Collections.singletonList(locker2));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.singletonList(locker1), Collections.singletonList(primaryLockerRobot));
+
+        Bag givenBag = new Bag();
+        Ticket ticket = lockerRobotManager.save(givenBag);
+
+        assertNotNull(ticket);
+        assertEquals(givenBag, locker2.take(ticket));
+
     }
 }
