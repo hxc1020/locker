@@ -84,7 +84,7 @@ public class PrimaryLockerRobotTest {
     }
 
     @Test
-    void should_throw_TicketIsInvalidException_when_take_given_robot_and_two_locker_and_invalid_ticket() throws LockerIsFullException, TicketIsInvalidException {
+    void should_throw_TicketIsInvalidException_when_take_given_robot_and_two_locker_and_invalid_ticket() throws LockerIsFullException {
         Locker locker1 = new Locker(2);
         Locker locker2 = new Locker(4);
         PrimaryLockerRobot primaryLockerRobot = new PrimaryLockerRobot(Arrays.asList(locker1, locker2));

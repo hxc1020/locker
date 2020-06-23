@@ -13,13 +13,20 @@ public class SmartLockerRobot extends BaseRobot {
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
-        Optional<Locker> maxSpaceLocker = lockers.stream().max(Comparator.comparing(Locker::freeSpace));
-        if (maxSpaceLocker.isPresent()) {
-            Ticket ticket = maxSpaceLocker.get().save(bag);
+        Optional<Locker> locker = getAvailableLocker();
+        if (locker.isPresent()) {
+            Ticket ticket = locker.get().save(bag);
             ticket.setType(TicketType.GIVEN_BY_ROBOT);
             return ticket;
         }
-        return null;
+        throw new LockerIsFullException();
+    }
+
+    @Override
+    public Optional<Locker> getAvailableLocker() {
+        return lockers.stream()
+                .filter(locker -> locker.freeSpace() > 0)
+                .max(Comparator.comparing(Locker::freeSpace));
     }
 }
 

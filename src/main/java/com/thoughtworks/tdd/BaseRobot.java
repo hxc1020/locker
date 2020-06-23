@@ -19,13 +19,7 @@ public abstract class BaseRobot implements Robot {
         throw new TicketIsInvalidException();
     }
 
-    @Override
-    public boolean isFull() {
-        return lockers.stream().allMatch(Locker::isFull);
-    }
-
-    @Override
-    public boolean hasBag(Ticket ticket) {
-        return lockers.stream().anyMatch(locker -> locker.hasBag(ticket));
+    public List<Locker> getLockers() {
+        return lockers;
     }
 }
