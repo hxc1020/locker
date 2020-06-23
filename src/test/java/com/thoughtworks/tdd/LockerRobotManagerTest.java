@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static java.util.Collections.emptyList;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LockerRobotManagerTest {
 
@@ -37,5 +36,16 @@ public class LockerRobotManagerTest {
 
         assertNotNull(ticket);
         assertEquals(givenBag, locker2.take(ticket));
+    }
+
+    @Test
+    void should_throw_LockerIsFullException_when_save_bag_given_manager_manage_2_lockers_and_0_robot_and_both_locker_have_no_capacity() throws TicketIsInvalidException, LockerIsFullException {
+        Locker locker1 = new Locker(1);
+        Locker locker2 = new Locker(1);
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Arrays.asList(locker1, locker2), emptyList());
+        locker1.save(new Bag());
+        locker2.save(new Bag());
+
+        assertThrows(LockerIsFullException.class, () -> lockerRobotManager.save(new Bag()));
     }
 }
