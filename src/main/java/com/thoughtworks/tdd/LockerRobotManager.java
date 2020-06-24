@@ -20,6 +20,7 @@ public class LockerRobotManager {
                 .map(Robot::getLockers)
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
+        this.lockers.addAll(this.managerLockers);
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
