@@ -48,7 +48,7 @@ public class LockerRobotManager {
                     .filter(Optional::isPresent)
                     .map(Optional::get)
                     .findAny()
-                    .orElse(getLockerByManager(ticket));
+                    .orElse(getLockerWhichHasBagByManager(ticket));
 
             if (locker != null) {
                 return locker.take(ticket);
@@ -57,7 +57,7 @@ public class LockerRobotManager {
         throw new TicketIsInvalidException();
     }
 
-    private Locker getLockerByManager(Ticket ticket) {
+    private Locker getLockerWhichHasBagByManager(Ticket ticket) {
         for (Locker locker : lockers) {
             if (locker.hasBag(ticket)) {
                 return locker;
