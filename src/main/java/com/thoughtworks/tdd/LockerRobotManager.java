@@ -16,23 +16,29 @@ public class LockerRobotManager {
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
-        Ticket ticket;
-        for (Robot robot : robots) {
-            Optional<Locker> locker = robot.getAvailableLocker();
-            if (locker.isPresent()) {
-                ticket = locker.get().save(bag);
-                ticket.setType(TicketType.GIVEN_BY_MANAGER);
-                return ticket;
-            }
+        Locker availableLocker = robots.stream()
+                .map(Robot::getAvailableLocker)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .findAny()
+                .orElse(getAvailableLockerByManager());
+
+        if (availableLocker != null) {
+            Ticket ticket = availableLocker.save(bag);
+            ticket.setType(TicketType.GIVEN_BY_MANAGER);
+            return ticket;
         }
+
+        throw new LockerIsFullException();
+    }
+
+    private Locker getAvailableLockerByManager() {
         for (Locker locker : lockers) {
             if (!locker.isFull()) {
-                ticket = locker.save(bag);
-                ticket.setType(TicketType.GIVEN_BY_MANAGER);
-                return ticket;
+                return locker;
             }
         }
-        throw new LockerIsFullException();
+        return null;
     }
 
     public Bag take(Ticket ticket) throws TicketIsInvalidException {
