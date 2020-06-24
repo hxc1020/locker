@@ -3,6 +3,7 @@ package com.thoughtworks.tdd;
 import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class BaseRobot implements Robot {
     protected List<Locker> lockers;
@@ -19,7 +20,8 @@ public abstract class BaseRobot implements Robot {
         throw new TicketIsInvalidException();
     }
 
-    public List<Locker> getLockers() {
-        return lockers;
+    @Override
+    public Optional<Locker> getLockerWhichHasBag(Ticket ticket) {
+        return lockers.stream().filter(locker -> locker.hasBag(ticket)).findAny();
     }
 }

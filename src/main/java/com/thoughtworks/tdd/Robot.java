@@ -14,5 +14,5 @@ public interface Robot {
 
     Optional<Locker> getAvailableLocker();
 
-    List<Locker> getLockers();
+    Optional<Locker> getLockerWhichHasBag(Ticket ticket);
 }

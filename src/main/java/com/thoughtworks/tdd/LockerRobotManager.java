@@ -3,24 +3,16 @@ package com.thoughtworks.tdd;
 import com.thoughtworks.tdd.exception.LockerIsFullException;
 import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class LockerRobotManager {
-    private final List<Locker> managerLockers;
     private final List<Locker> lockers;
     private final List<Robot> robots;
 
-    public LockerRobotManager(List<Locker> managerLockers, List<Robot> robots) {
-        this.managerLockers = managerLockers;
+    public LockerRobotManager(List<Locker> lockers, List<Robot> robots) {
+        this.lockers = lockers;
         this.robots = robots;
-        this.lockers = this.robots.stream()
-                .map(Robot::getLockers)
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
-        this.lockers.addAll(this.managerLockers);
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
@@ -33,9 +25,9 @@ public class LockerRobotManager {
                 return ticket;
             }
         }
-        for (Locker locker : managerLockers) {
+        for (Locker locker : lockers) {
             if (!locker.isFull()) {
-                ticket =  locker.save(bag);
+                ticket = locker.save(bag);
                 ticket.setType(TicketType.GIVEN_BY_MANAGER);
                 return ticket;
             }
@@ -45,12 +37,26 @@ public class LockerRobotManager {
 
     public Bag take(Ticket ticket) throws TicketIsInvalidException {
         if (ticket.getType().equals(TicketType.GIVEN_BY_MANAGER)) {
-            for (Locker locker : lockers) {
-                if (locker.hasBag(ticket)) {
-                    return locker.take(ticket);
-                }
+            Locker locker = robots.stream()
+                    .map(robot -> robot.getLockerWhichHasBag(ticket))
+                    .filter(Optional::isPresent)
+                    .map(Optional::get)
+                    .findAny()
+                    .orElse(getLockerByManager(ticket));
+
+            if (locker != null) {
+                return locker.take(ticket);
             }
         }
-        throw  new TicketIsInvalidException();
+        throw new TicketIsInvalidException();
+    }
+
+    private Locker getLockerByManager(Ticket ticket) {
+        for (Locker locker : lockers) {
+            if (locker.hasBag(ticket)) {
+                return locker;
+            }
+        }
+        return null;
     }
 }
