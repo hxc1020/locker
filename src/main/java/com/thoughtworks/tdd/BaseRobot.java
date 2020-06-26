@@ -5,7 +5,7 @@ import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseRobot implements Robot {
+abstract class BaseRobot implements Robot {
     protected List<Locker> lockers;
 
     @Override
