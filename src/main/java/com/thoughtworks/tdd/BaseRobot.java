@@ -24,4 +24,19 @@ abstract class BaseRobot implements Robot {
     public Optional<Locker> getLockerWhichHasBag(Ticket ticket) {
         return lockers.stream().filter(locker -> locker.hasBag(ticket)).findAny();
     }
+
+    @Override
+    public int getAvailableCapacity() {
+        return lockers.stream().mapToInt(Locker::freeSpace).sum();
+    }
+
+    @Override
+    public int getCapacity() {
+        return lockers.stream().mapToInt(Locker::getCapacity).sum();
+    }
+
+    @Override
+    public List<Locker> getLockers() {
+        return lockers;
+    }
 }

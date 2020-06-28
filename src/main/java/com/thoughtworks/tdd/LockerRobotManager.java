@@ -19,6 +19,10 @@ public class LockerRobotManager {
         return lockers;
     }
 
+    public List<Robot> getRobots() {
+        return robots;
+    }
+
     public Ticket save(Bag bag) throws LockerIsFullException {
         Locker availableLocker = robots.stream()
                 .map(Robot::getAvailableLocker)

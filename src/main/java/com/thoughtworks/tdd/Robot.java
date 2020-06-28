@@ -15,4 +15,10 @@ public interface Robot {
     Optional<Locker> getAvailableLocker();
 
     Optional<Locker> getLockerWhichHasBag(Ticket ticket);
+
+    int getAvailableCapacity();
+
+    int getCapacity();
+
+    List<Locker> getLockers();
 }

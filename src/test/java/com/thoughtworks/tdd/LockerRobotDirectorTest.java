@@ -56,6 +56,6 @@ class LockerRobotDirectorTest {
 
         String report = lockerRobotDirector.getReport();
 
-        assertEquals("M  6  14  \n    R  4  9  \n        L  4  9  \n    R  2  5   \n        L  2  5", report);
+        assertEquals("M  6  14\n    R  4  9\n        L  4  9\n    R  2  5\n        L  2  5", report);
     }
 }
