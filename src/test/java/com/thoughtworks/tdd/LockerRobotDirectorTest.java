@@ -29,4 +29,33 @@ class LockerRobotDirectorTest {
 
         assertEquals("M  4  8\n    L  0  3\n    L  4  5", report);
     }
+
+    @Test
+    @DisplayName("should get correct formatted report" +
+            "when director get report " +
+            "given director manage 1 manager, manager manage robot1 and robot2, robot1 manage locker1, robot2 manage locker2," +
+            "manager manage no locker," +
+            "locker's available capacity and capacity is 4,9; 2,5 individually")
+    void task2() throws LockerIsFullException {
+        PrimaryLockerRobot primaryLockerRobot1 = new PrimaryLockerRobot(Collections.singletonList(new Locker(9)));
+        PrimaryLockerRobot primaryLockerRobot2 = new PrimaryLockerRobot(Collections.singletonList(new Locker(5)));
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Collections.emptyList(),
+                Arrays.asList(primaryLockerRobot1, primaryLockerRobot2));
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(lockerRobotManager);
+
+        primaryLockerRobot1.save(new Bag());
+        primaryLockerRobot1.save(new Bag());
+        primaryLockerRobot1.save(new Bag());
+        primaryLockerRobot1.save(new Bag());
+        primaryLockerRobot1.save(new Bag());
+
+        primaryLockerRobot2.save(new Bag());
+        primaryLockerRobot2.save(new Bag());
+        primaryLockerRobot2.save(new Bag());
+
+
+        String report = lockerRobotDirector.getReport();
+
+        assertEquals("M  6  14  \n    R  4  9  \n        L  4  9  \n    R  2  5   \n        L  2  5", report);
+    }
 }
