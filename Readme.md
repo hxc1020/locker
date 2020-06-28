@@ -116,3 +116,45 @@ then：取包成功
 - given：LockerRobotManager管理一个locker1和一个robot，robot管理locker2，票据是通过robot存包得到的  
 when：LockerRobotManager取包  
 then：取包失败，提示票无效  
+
+## LockerRobotDirector
+- given：director管理一个manager，manager管理两个locker，manager没有管理robot，locker的可用容量和容量分别为：0，3；4，5  
+when：director获取报表  
+then：报表内容为:  
+M  4  8  
+    L  0  3  
+    L  4  5  
+                                 
+given：director管理一个manager，manager管理robot1和robot2，robot1管理locker1，robot2管理locker2，locker、locker2的可用容量和容量分别为：4，9；2，5，manager没有管理locker
+when：director获取报表
+then：报表内容为：
+M  6  14
+    R  4  9
+        L  4  9
+    R  2  5 
+        L  2  5
+
+given：director管理一个manager，manager管理一个locker1和一个robot，robot管理一个locker2，locker1和locker2的可用容量金额容量分别为：0，9；0，3
+when：director获取报表
+then：报表内容为：
+M  0  12
+    L  0  9
+    R  0  3 
+        L 0  3
+
+given：director管理两个manager，manager1管理一个locker1和一个robot1，robot1管理一个locker2，locker1和locker2的可用容量和容量分别为：2，3；4，9，manager2管理一个locker3，locker3的可用容量和容量分别为：4，8，manager2没有管理robot
+when：director获取报表
+then：报表内容为：
+M  6  12
+    L  2  3
+    R  4  9
+        L  4  9
+M  4  8
+    L  4  8
+
+given：director管理一个manager，manager管理两个locker1、locker2，且locker1、locker2都有剩余容量，locker1和locker2的可用容量和容量分别为：1，3；5，6，和没有管理robot，存在一个不在manager管理的locker3
+when：director获取报表
+then：报表内容为：
+M  6  9
+    L  1  3
+    L  5  6 
