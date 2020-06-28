@@ -15,6 +15,10 @@ public class LockerRobotManager {
         this.robots = robots;
     }
 
+    public List<Locker> getLockers() {
+        return lockers;
+    }
+
     public Ticket save(Bag bag) throws LockerIsFullException {
         Locker availableLocker = robots.stream()
                 .map(Robot::getAvailableLocker)

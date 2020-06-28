@@ -15,7 +15,7 @@ public class Locker {
         this.store = new HashMap<>(this.capacity);
     }
 
-    public Ticket save(Bag bag) throws LockerIsFullException{
+    public Ticket save(Bag bag) throws LockerIsFullException {
         if (isFull()) {
             throw new LockerIsFullException();
         }
@@ -35,11 +35,15 @@ public class Locker {
         return store.remove(ticket);
     }
 
-    public boolean hasBag(Ticket ticket){
+    public boolean hasBag(Ticket ticket) {
         return store.containsKey(ticket);
     }
 
-    public int freeSpace(){
+    public int freeSpace() {
         return capacity - store.size();
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }
