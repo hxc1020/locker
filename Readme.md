@@ -148,16 +148,16 @@ M  0  3
         L 0  1  
 ```
 
-- given：director管理两个manager，manager1管理一个locker1和一个robot1，robot1管理一个locker2，locker1和locker2的可用容量和容量分别为：2，3；4，9，manager2管理一个locker3，locker3的可用容量和容量分别为：4，8，manager2没有管理robot  
+- given：director管理两个manager，manager1管理一个locker1和一个robot1，robot1管理一个locker2，locker1和locker2的可用容量和容量分别为：2，3；1，2，manager2管理一个locker3，locker3的可用容量和容量分别为：0，2，manager2没有管理robot  
 when：director获取报表  
 then：报表内容为：  
 ```
-M  6  12  
+M  3  5  
     L  2  3  
-    R  4  9  
-        L  4  9  
-M  4  8  
-    L  4  8  
+    R  1  2  
+        L  1  2   
+M  0  2  
+    L  0  2  
 ```
 
 - given：director管理一个manager，manager管理两个locker1、locker2，且locker1、locker2都有剩余容量，locker1和locker2的可用容量和容量分别为：1，3；5，6，和没有管理robot，存在一个不在manager管理的locker3  
