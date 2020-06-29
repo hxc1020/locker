@@ -4,6 +4,7 @@ import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 abstract class BaseRobot implements Robot {
     protected List<Locker> lockers;
@@ -26,17 +27,8 @@ abstract class BaseRobot implements Robot {
     }
 
     @Override
-    public int getAvailableCapacity() {
-        return lockers.stream().mapToInt(Locker::freeSpace).sum();
-    }
-
-    @Override
-    public int getCapacity() {
-        return lockers.stream().mapToInt(Locker::getCapacity).sum();
-    }
-
-    @Override
-    public List<Locker> getLockers() {
-        return lockers;
+    public CapacityReport getReport() {
+        List<CapacityReport> reports = this.lockers.stream().map(Locker::getReport).collect(Collectors.toList());
+        return new CapacityReport(reports, CapacityReport.ReportTag.R);
     }
 }

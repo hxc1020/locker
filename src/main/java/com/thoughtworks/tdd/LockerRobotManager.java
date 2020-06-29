@@ -5,22 +5,15 @@ import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class LockerRobotManager {
+public class LockerRobotManager implements CapacityInfo {
     private final List<Locker> lockers;
     private final List<Robot> robots;
 
     public LockerRobotManager(List<Locker> lockers, List<Robot> robots) {
         this.lockers = lockers;
         this.robots = robots;
-    }
-
-    public List<Locker> getLockers() {
-        return lockers;
-    }
-
-    public List<Robot> getRobots() {
-        return robots;
     }
 
     public Ticket save(Bag bag) throws LockerIsFullException {
@@ -72,5 +65,12 @@ public class LockerRobotManager {
             }
         }
         return null;
+    }
+
+    @Override
+    public CapacityReport getReport() {
+        List<CapacityReport> reports = this.lockers.stream().map(Locker::getReport).collect(Collectors.toList());
+        reports.addAll(this.robots.stream().map(Robot::getReport).collect(Collectors.toList()));
+        return new CapacityReport(reports, CapacityReport.ReportTag.M);
     }
 }

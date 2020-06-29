@@ -6,7 +6,7 @@ import com.thoughtworks.tdd.exception.TicketIsInvalidException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Locker {
+public class Locker implements CapacityInfo {
     private final int capacity;
     private final Map<Ticket, Bag> store;
 
@@ -43,7 +43,8 @@ public class Locker {
         return capacity - store.size();
     }
 
-    public int getCapacity() {
-        return capacity;
+    @Override
+    public CapacityReport getReport() {
+        return new CapacityReport(freeSpace(), this.capacity, CapacityReport.ReportTag.L);
     }
 }
