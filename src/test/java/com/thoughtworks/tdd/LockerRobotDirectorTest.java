@@ -104,4 +104,27 @@ class LockerRobotDirectorTest {
 
         assertEquals("M  3  5\n    L  2  3\n    R  1  2\n        L  1  2\nM  0  2\n    L  0  2", report);
     }
+
+    @Test
+    @DisplayName("should get correct formatted report" +
+            "when director get report " +
+            "given director manage 1 manager, manager manage locker1 and locker2,manager manage no robot" +
+            "locker's available capacity and capacity is 1,3; 5,6 individually，" +
+            "and there is a locker3 which is not managed by manager ")
+    void task5() throws LockerIsFullException {
+        Locker locker1 = new Locker(3);
+        Locker locker2 = new Locker(6);
+        LockerRobotManager lockerRobotManager = new LockerRobotManager(Arrays.asList(locker1, locker2),
+                Collections.emptyList());
+        LockerRobotDirector lockerRobotDirector = new LockerRobotDirector(Collections.singletonList(lockerRobotManager));
+        Locker locker3 = new Locker(4);
+
+        locker1.save(new Bag());
+        locker1.save(new Bag());
+        locker2.save(new Bag());
+
+        String report = lockerRobotDirector.getReport();
+
+        assertEquals("M  6  9\n    L  1  3\n    L  5  6", report);
+    }
 }
