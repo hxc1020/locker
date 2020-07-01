@@ -24,13 +24,9 @@ public class CapacityReport {
     public CapacityReport(List<CapacityReport> reports, ReportTag tag) {
         this.tag = tag;
         this.reports = new ArrayList<>(reports.size());
-        this.addAll(reports);
+        this.reports.addAll(reports);
         this.availableCapacity = this.reports.stream().mapToInt(CapacityReport::getAvailableCapacity).sum();
         this.capacity = this.reports.stream().mapToInt(CapacityReport::getCapacity).sum();
-    }
-
-    public void addAll(List<CapacityReport> reports) {
-        this.reports.addAll(reports);
     }
 
     public int getAvailableCapacity() {
