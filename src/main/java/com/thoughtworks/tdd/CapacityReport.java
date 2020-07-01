@@ -39,7 +39,7 @@ public class CapacityReport {
 
     @Override
     public String toString() {
-        return tag.name() + TWO_SPACES + availableCapacity + TWO_SPACES + capacity
+        return tag.tag() + TWO_SPACES + availableCapacity + TWO_SPACES + capacity
                 + reports.stream()
                 .map(Objects::toString)
                 .map(str -> "\n" + FOUR_SPACES + str.replaceAll("\n", "\n" + FOUR_SPACES))
@@ -47,8 +47,17 @@ public class CapacityReport {
     }
 
     public enum ReportTag {
-        M,
-        R,
-        L
+        MANAGER("M"),
+        ROBOT("R"),
+        LOCKER("L");
+        private final String tag;
+
+        ReportTag(String tag) {
+            this.tag = tag;
+        }
+
+        public String tag() {
+            return tag;
+        }
     }
 }

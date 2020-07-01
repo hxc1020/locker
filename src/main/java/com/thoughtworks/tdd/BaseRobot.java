@@ -29,6 +29,6 @@ abstract class BaseRobot implements Robot {
     @Override
     public CapacityReport getReport() {
         List<CapacityReport> reports = this.lockers.stream().map(Locker::getReport).collect(Collectors.toList());
-        return new CapacityReport(reports, CapacityReport.ReportTag.R);
+        return new CapacityReport(reports, CapacityReport.ReportTag.ROBOT);
     }
 }

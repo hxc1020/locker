@@ -45,6 +45,6 @@ public class Locker implements CapacityInfo {
 
     @Override
     public CapacityReport getReport() {
-        return new CapacityReport(availableCapacity(), this.capacity, CapacityReport.ReportTag.L);
+        return new CapacityReport(availableCapacity(), this.capacity, CapacityReport.ReportTag.LOCKER);
     }
 }

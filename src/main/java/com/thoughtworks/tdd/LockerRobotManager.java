@@ -71,6 +71,6 @@ public class LockerRobotManager implements CapacityInfo {
     public CapacityReport getReport() {
         List<CapacityReport> reports = this.lockers.stream().map(Locker::getReport).collect(Collectors.toList());
         reports.addAll(this.robots.stream().map(Robot::getReport).collect(Collectors.toList()));
-        return new CapacityReport(reports, CapacityReport.ReportTag.M);
+        return new CapacityReport(reports, CapacityReport.ReportTag.MANAGER);
     }
 }
