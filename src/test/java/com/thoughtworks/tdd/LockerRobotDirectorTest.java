@@ -24,7 +24,10 @@ class LockerRobotDirectorTest {
 
         String report = lockerRobotDirector.getReport();
 
-        assertEquals("M  4  8\n    L  0  3\n    L  4  5", report);
+        String expected = "M  4  8\n" +
+                "    L  0  3\n" +
+                "    L  4  5";
+        assertEquals(expected, report);
     }
 
     @Test
@@ -42,7 +45,12 @@ class LockerRobotDirectorTest {
 
         String report = lockerRobotDirector.getReport();
 
-        assertEquals("M  6  14\n    R  4  9\n        L  4  9\n    R  2  5\n        L  2  5", report);
+        String expected = "M  6  14\n" +
+                "    R  4  9\n" +
+                "        L  4  9\n" +
+                "    R  2  5\n" +
+                "        L  2  5";
+        assertEquals(expected, report);
     }
 
     @Test
@@ -59,7 +67,11 @@ class LockerRobotDirectorTest {
 
         String report = lockerRobotDirector.getReport();
 
-        assertEquals("M  0  3\n    L  0  2\n    R  0  1\n        L  0  1", report);
+        String expected = "M  0  3\n" +
+                "    L  0  2\n" +
+                "    R  0  1\n" +
+                "        L  0  1";
+        assertEquals(expected, report);
     }
 
     @Test
@@ -80,7 +92,13 @@ class LockerRobotDirectorTest {
 
         String report = lockerRobotDirector.getReport();
 
-        assertEquals("M  3  5\n    L  2  3\n    R  1  2\n        L  1  2\nM  0  2\n    L  0  2", report);
+        String expected = "M  3  5\n" +
+                "    L  2  3\n" +
+                "    R  1  2\n" +
+                "        L  1  2\n" +
+                "M  0  2\n" +
+                "    L  0  2";
+        assertEquals(expected, report);
     }
 
     @Test
@@ -99,7 +117,10 @@ class LockerRobotDirectorTest {
 
         String report = lockerRobotDirector.getReport();
 
-        assertEquals("M  6  9\n    L  1  3\n    L  5  6", report);
+        String expected = "M  6  9\n" +
+                "    L  1  3\n" +
+                "    L  5  6";
+        assertEquals(expected, report);
     }
 
     private Locker createTestLocker(int availableCapacity, int capacity) throws LockerIsFullException {
