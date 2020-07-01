@@ -1,6 +1,7 @@
 package com.thoughtworks.tdd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -11,16 +12,18 @@ public class CapacityReport {
     private final int availableCapacity;
     private final int capacity;
     private final ReportTag tag;
-    private final List<CapacityReport> reports = new ArrayList<>();
+    private final List<CapacityReport> reports;
 
     public CapacityReport(int availableCapacity, int capacity, ReportTag tag) {
         this.availableCapacity = availableCapacity;
         this.capacity = capacity;
         this.tag = tag;
+        this.reports = Collections.emptyList();
     }
 
     public CapacityReport(List<CapacityReport> reports, ReportTag tag) {
         this.tag = tag;
+        this.reports = new ArrayList<>(reports.size());
         this.addAll(reports);
         this.availableCapacity = this.reports.stream().mapToInt(CapacityReport::getAvailableCapacity).sum();
         this.capacity = this.reports.stream().mapToInt(CapacityReport::getCapacity).sum();
