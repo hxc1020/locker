@@ -39,12 +39,12 @@ public class Locker implements CapacityInfo {
         return store.containsKey(ticket);
     }
 
-    public int freeSpace() {
+    public int availableCapacity() {
         return capacity - store.size();
     }
 
     @Override
     public CapacityReport getReport() {
-        return new CapacityReport(freeSpace(), this.capacity, CapacityReport.ReportTag.L);
+        return new CapacityReport(availableCapacity(), this.capacity, CapacityReport.ReportTag.L);
     }
 }

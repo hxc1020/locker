@@ -25,8 +25,8 @@ public class SmartLockerRobot extends BaseRobot {
     @Override
     public Optional<Locker> getAvailableLocker() {
         return lockers.stream()
-                .filter(locker -> locker.freeSpace() > 0)
-                .max(Comparator.comparing(Locker::freeSpace));
+                .filter(locker -> locker.availableCapacity() > 0)
+                .max(Comparator.comparing(Locker::availableCapacity));
     }
 }
 
